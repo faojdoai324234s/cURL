@@ -25,8 +25,10 @@ echo Downloading curl...
 powershell -command "(new-object System.Net.WebClient).DownloadFile('https://curl.se/download/curl-8.12.1.zip','curl.zip')"
 
 REM Extract downloaded zip file to tmp_libcurl
-C:\Program Files\7-Zip\7z.exe x curl.zip -y -otmp_libcurl
+"C:\Program Files\7-Zip\7z.exe" x curl.zip -y -otmp_libcurl
 del curl.zip
+
+cd tmp_libcurl\curl-*\winbuild
 
 :end
 echo Done.
