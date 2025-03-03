@@ -10,7 +10,7 @@ set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio\2019\Enterprise\VC\Auxili
 if exist %MSVCDIR% (
   if exist %VCVARSALLPATH% (
    	set COMPILER_VER="2019"
-   	set VCVERSION = 15
+   	set VCVERSION = 16
    	echo Using Visual Studio 2019 Enterprise
 	goto begin
   )
@@ -41,18 +41,19 @@ if [%1]==[-static] (
 
 echo "Path to vcvarsall.bat: %VCVARSALLPATH%"
 call %VCVARSALLPATH% x64
+set COMPILER_OPTIONS = "MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes"
 
 echo Compiling dll-debug-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes %COMPILER_OPTIONS%
 
 echo Compiling dll-release-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes %COMPILER_OPTIONS%
 
 echo Compiling static-debug-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes %COMPILER_OPTIONS%
 
 echo Compiling static-release-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no %COMPILER_OPTIONS%
 
 cd D:\a\cURL\cURL\tmp_libcurl\curl-8.12.1\builds
 dir /s
