@@ -43,16 +43,16 @@ echo "Path to vcvarsall.bat: %VCVARSALLPATH%"
 call %VCVARSALLPATH% x64
 
 echo Compiling dll-debug-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
 
 echo Compiling dll-release-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
 
 echo Compiling static-debug-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
 
 echo Compiling static-release-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
 
 :end
 echo Done.
