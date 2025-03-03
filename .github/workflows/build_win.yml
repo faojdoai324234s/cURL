@@ -16,3 +16,11 @@ jobs:
       - name: Download and build cURL
         shell: cmd
         run: build_win.bat
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-artifact
+          path: D:\a\cURL\cURL\tmp_libcurl\curl-8.12.1\builds
+          if-no-files-found: ignore
+          retention-days: 0
