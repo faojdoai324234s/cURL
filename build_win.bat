@@ -10,7 +10,7 @@ set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio\2019\Enterprise\VC\Auxili
 if exist %MSVCDIR% (
   if exist %VCVARSALLPATH% (
    	set COMPILER_VER="2019"
-   	set VCVERSION = 15
+   	set VCVERSION = 16
    	echo Using Visual Studio 2019 Enterprise
 	goto begin
   )
