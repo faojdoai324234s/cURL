@@ -10,6 +10,7 @@ set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio\2019\Enterprise\VC\Auxili
 if exist %MSVCDIR% (
   if exist %VCVARSALLPATH% (
    	set COMPILER_VER="2019"
+   	set VCVERSION = 15
    	echo Using Visual Studio 2019 Enterprise
 	goto begin
   )
@@ -29,6 +30,29 @@ REM Extract downloaded zip file to tmp_libcurl
 del curl.zip
 
 cd tmp_libcurl\curl-*\winbuild
+
+REM Build!
+echo "Building libcurl now!"
+
+if [%1]==[-static] (
+	set RTLIBCFG=static
+	echo Using /MT instead of /MD
+) 
+
+echo "Path to vcvarsall.bat: %VCVARSALLPATH%"
+call %VCVARSALLPATH% x64
+
+echo Compiling dll-debug-x64 version...
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64
+
+echo Compiling dll-release-x64 version...
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64
+
+echo Compiling static-debug-x64 version...
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64
+
+echo Compiling static-release-x64 version...
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64
 
 :end
 echo Done.
