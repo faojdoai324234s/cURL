@@ -43,16 +43,16 @@ echo "Path to vcvarsall.bat: %VCVARSALLPATH%"
 call %VCVARSALLPATH% x64
 
 echo Compiling dll-debug-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no SSL_PATH="C:\Program Files\OpenSSL"
 
 echo Compiling dll-release-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no
+nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no SSL_PATH="C:\Program Files\OpenSSL"
 
 echo Compiling static-debug-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no SSL_PATH="C:\Program Files\OpenSSL"
 
 echo Compiling static-release-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no
+nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes WITH_SSL=dll ENABLE_SSPI=no ENABLE_IDN=no ENABLE_SCHANNEL=no SSL_PATH="C:\Program Files\OpenSSL"
 
 cd D:\a\cURL\cURL\tmp_libcurl\curl-8.12.1\builds
 dir /s
