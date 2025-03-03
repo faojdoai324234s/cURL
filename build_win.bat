@@ -54,6 +54,9 @@ nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_A
 echo Compiling static-release-x64 version...
 nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
 
+cd tmp_libcurl\curl-*\builds
+dir /s
+
 :end
 echo Done.
 exit /b
