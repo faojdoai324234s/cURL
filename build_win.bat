@@ -10,7 +10,7 @@ set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio\2019\Enterprise\VC\Auxili
 if exist %MSVCDIR% (
   if exist %VCVARSALLPATH% (
    	set COMPILER_VER="2019"
-    echo Using Visual Studio 2019 Enterprise
+   	echo Using Visual Studio 2019 Enterprise
 	goto begin
   )
 )
@@ -20,10 +20,13 @@ goto end
 
 :begin
 
+REM Download latest curl and rename to curl.zip
 echo Downloading curl...
 powershell -command "(new-object System.Net.WebClient).DownloadFile('https://curl.se/download/curl-8.12.1.zip','curl.zip')"
 
-dir
+REM Extract downloaded zip file to tmp_libcurl
+C:\Program Files\7-Zip\7z.exe x curl.zip -y -otmp_libcurl
+del curl.zip
 
 :end
 echo Done.
