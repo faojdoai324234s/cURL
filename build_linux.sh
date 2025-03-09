@@ -15,7 +15,7 @@ cmake --build build --config Debug
 cmake --install build
 
 # Copy over the built files
-cp build/*.so upload/Debug
+cp build/libcurl-d.so upload/Debug
 
 # Clean up before we run CMake again
 rm -rf build
@@ -26,7 +26,7 @@ cmake --build build --config Release
 cmake --install build
 
 # Copy over the built files
-cp build/*.so upload/Release
+cp build/libcurl.so upload/Release
 
 # Copy over the headers
 cp -r curl/include/curl/. upload/include/curl
