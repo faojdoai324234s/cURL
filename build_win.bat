@@ -1,62 +1,37 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set PROGFILES=%ProgramFiles%
-if not "%ProgramFiles(x86)%" == "" set PROGFILES=%ProgramFiles(x86)%
+mkdir upload
+mkdir upload\include\curl
+mkdir upload\Debug
+mkdir upload\Release
 
-REM Check if Visual Studio 2019 is installed
-set MSVCDIR="%PROGFILES%\Microsoft Visual Studio\2019"
-set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
-if exist %MSVCDIR% (
-  if exist %VCVARSALLPATH% (
-   	set COMPILER_VER="2019"
-   	set VCVERSION = 15
-   	echo Using Visual Studio 2019 Enterprise
-	goto begin
-  )
-)
+REM Download latest libcurl
+git clone --branch curl-8_12_1 --single-branch https://github.com/curl/curl
 
-echo No compiler found : Microsoft Visual Studio 2019 Enterprise is not installed.
-goto end
+REM Build Debug configuration
+cmake -S curl -B build -D CMAKE_BUILD_TYPE=Debug -D CURL_ZLIB=OFF -D CURL_ZSTD=OFF -D CURL_BROTLI=OFF -D USE_NGHTTP2=OFF -D USE_LIBIDN2=OFF -D BUILD_CURL_EXE=OFF -D BUILD_EXAMPLES=OFF -D BUILD_LIBCURL_DOCS=OFF -D BUILD_MISC_DOCS=OFF -D BUILD_TESTING=OFF -D CURL_ENABLE_SSL=ON -D CURL_USE_OPENSSL=ON -D ENABLE_CURL_MANUAL=OFF -D PICKY_COMPILER=OFF -D CURL_USE_LIBPSL=OFF -D CURL_USE_LIBSSH2=OFF
+cmake --build build --config Debug
+cmake --install build
 
-:begin
+REM Copy over the built files
+copy /y /v build\lib\Debug\*.dll upload\Debug
+copy /y /v build\lib\Debug\*.lib upload\Debug
+copy /y /v build\lib\Debug\*.pdb upload\Debug
 
-REM Download latest curl and rename to curl.zip
-echo Downloading curl...
-powershell -command "(new-object System.Net.WebClient).DownloadFile('https://curl.se/download/curl-8.12.1.zip','curl.zip')"
+REM Clean up before we run CMake again
+rmdir /s /q build
 
-REM Extract downloaded zip file to tmp_libcurl
-"C:\Program Files\7-Zip\7z.exe" x curl.zip -y -otmp_libcurl
-del curl.zip
+REM Build Release configuration
+cmake -S curl -B build -D CMAKE_BUILD_TYPE=Release -D CURL_ZLIB=OFF -D CURL_ZSTD=OFF -D CURL_BROTLI=OFF -D USE_NGHTTP2=OFF -D USE_LIBIDN2=OFF -D BUILD_CURL_EXE=OFF -D BUILD_EXAMPLES=OFF -D BUILD_LIBCURL_DOCS=OFF -D BUILD_MISC_DOCS=OFF -D BUILD_TESTING=OFF -D CURL_ENABLE_SSL=ON -D CURL_USE_OPENSSL=ON -D ENABLE_CURL_MANUAL=OFF -D PICKY_COMPILER=OFF -D CURL_USE_LIBPSL=OFF -D CURL_USE_LIBSSH2=OFF
+cmake --build build --config Release
+cmake --install build
 
-cd tmp_libcurl\curl-*\winbuild
+REM Copy over the built files
+copy /y /v build\lib\Release\*.dll upload\Release
+copy /y /v build\lib\Release\*.lib upload\Release
 
-REM Build!
-echo "Building libcurl now!"
+REM Copy over the headers
+copy /y /v curl\include\curl upload\include\curl
 
-if [%1]==[-static] (
-	set RTLIBCFG=static
-	echo Using /MT instead of /MD
-) 
-
-echo "Path to vcvarsall.bat: %VCVARSALLPATH%"
-call %VCVARSALLPATH% x64
-
-echo Compiling dll-debug-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
-
-echo Compiling dll-release-x64 version...
-nmake /f Makefile.vc mode=dll VC=%VCVERSION% DEBUG=no GEN_PDB=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
-
-echo Compiling static-debug-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=yes MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
-
-echo Compiling static-release-x64 version...
-nmake /f Makefile.vc mode=static VC=%VCVERSION% DEBUG=no MACHINE=x64 WINBUILD_ACKNOWLEDGE_DEPRECATED=yes
-
-cd D:\a\cURL\cURL\tmp_libcurl\curl-8.12.1\builds
-dir /s
-
-:end
-echo Done.
 exit /b
