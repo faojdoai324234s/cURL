@@ -7,7 +7,7 @@ mkdir upload\Debug
 mkdir upload\Release
 
 REM Download latest libcurl
-git clone https://github.com/curl/curl
+git clone --branch curl-8_12_1 --single-branch https://github.com/curl/curl
 
 REM Build Debug configuration
 cmake -S curl -B build -D CMAKE_BUILD_TYPE=Debug
