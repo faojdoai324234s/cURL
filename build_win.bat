@@ -9,8 +9,9 @@ mkdir upload\Release
 REM Download latest libcurl
 git clone --branch curl-8_12_1 --single-branch https://github.com/curl/curl
 
-REM Install zlib
+REM Install dependencies
 vcpkg install zlib
+vcpkg install brotli
 
 REM Build Debug configuration
 cmake -S curl -B build -D CMAKE_BUILD_TYPE=Debug
