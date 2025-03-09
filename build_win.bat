@@ -10,7 +10,7 @@ REM Download latest libcurl
 git clone https://github.com/curl/curl
 
 REM Build Debug configuration
-cmake -S curl -B build -D WITH_SSL=dll -D ENABLE_SSPI=no -D ENABLE_IDN=no -D ENABLE_SCHANNEL=no -D SSL_PATH="C:\Program Files\OpenSSL" -D CMAKE_BUILD_TYPE=Debug
+cmake -S curl -B build -D CMAKE_BUILD_TYPE=Debug
 cmake --build build --config Debug
 cmake --install build
 
@@ -23,7 +23,7 @@ REM Clean up before we run CMake again
 rmdir /s /q build
 
 REM Build Release configuration
-cmake -S curl -B build -D WITH_SSL=dll -D ENABLE_SSPI=no -D ENABLE_IDN=no -D ENABLE_SCHANNEL=no -D SSL_PATH="C:\Program Files\OpenSSL" -D CMAKE_BUILD_TYPE=Release
+cmake -S curl -B build -D CMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 cmake --install build
 
