@@ -32,6 +32,6 @@ copy /y /v build\Release\*.dll upload\Release
 copy /y /v build\Release\*.lib upload\Release
 
 REM Copy over the headers
-xcopy /y /v /s /e curl\include\curl upload\include\curl
+copy /y /v curl\include\curl upload\include\curl
 
 exit /b
