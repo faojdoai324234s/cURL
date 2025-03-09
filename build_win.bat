@@ -14,7 +14,7 @@ vcpkg install zlib
 vcpkg install brotli
 
 REM Build Debug configuration
-cmake -S curl -B build -D CMAKE_BUILD_TYPE=Debug
+cmake -S curl -B build -D CMAKE_BUILD_TYPE=Debug -D BUILD_CURL_EXE=OFF -D BUILD_EXAMPLES=OFF -D BUILD_LIBCURL_DOCS=OFF -D BUILD_MISC_DOCS=OFF -D BUILD_TESTING=OFF -D CURL_DEFAULT_SSL_BACKEND=openssl -D ENABLE_CURL_MANUAL=OFF -D PICKY_COMPILER=OFF
 cmake --build build --config Debug
 cmake --install build
 
@@ -27,7 +27,7 @@ REM Clean up before we run CMake again
 rmdir /s /q build
 
 REM Build Release configuration
-cmake -S curl -B build -D CMAKE_BUILD_TYPE=Release
+cmake -S curl -B build -D CMAKE_BUILD_TYPE=Release -D BUILD_CURL_EXE=OFF -D BUILD_EXAMPLES=OFF -D BUILD_LIBCURL_DOCS=OFF -D BUILD_MISC_DOCS=OFF -D BUILD_TESTING=OFF -D CURL_DEFAULT_SSL_BACKEND=openssl -D ENABLE_CURL_MANUAL=OFF -D PICKY_COMPILER=OFF
 cmake --build build --config Release
 cmake --install build
 
